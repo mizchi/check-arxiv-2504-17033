@@ -10,3 +10,7 @@ criterion = "0.5"
 [[bench]]
 name = "shortest_path_bench"
 harness = false
+
+[[bin]]
+name = "analysis"
+path = "src/analysis.rs"

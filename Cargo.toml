@@ -1,0 +1,12 @@
+[package]
+name = "shortest-path-validation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+criterion = "0.5"
+
+[[bench]]
+name = "shortest_path_bench"
+harness = false

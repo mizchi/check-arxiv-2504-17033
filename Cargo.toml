@@ -14,3 +14,7 @@ harness = false
 [[bin]]
 name = "analysis"
 path = "src/analysis.rs"
+
+[[bin]]
+name = "test_debug"
+path = "src/test_debug.rs"

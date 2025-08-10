@@ -5,7 +5,7 @@ pub struct Edge {
     pub weight: f64,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Graph {
     pub n: usize,
     pub edges: Vec<Vec<Edge>>,

@@ -1,148 +1,151 @@
-# Breaking the Sorting Barrier - 最短経路アルゴリズムの検証実装
+# Breaking the Sorting Barrier - Validation of a New Shortest-Path Algorithm
 
-論文「Breaking the Sorting Barrier for Directed Single-Source Shortest Paths」（[arXiv:2504.17033](https://arxiv.org/abs/2504.17033)）で提案された革新的な最短経路アルゴリズムの検証実装です。
+English | [日本語](./README-ja.md)
 
-## 論文について
+This repository validates the shortest-path algorithm proposed in "Breaking the Sorting Barrier for Directed Single-Source Shortest Paths" ([arXiv:2504.17033](https://arxiv.org/abs/2504.17033)).
 
-2025年のSTOC（ACM Symposium on Theory of Computing）でBest Paper Awardを受賞した画期的な研究で、40年間破られなかったDijkstraアルゴリズムの計算量の壁を突破しました。
+> **2026-09 replication ([docs/chd-replication.md](./docs/chd-replication.md), in Japanese)**
+> vals.ai announced C-HD as a shortest-path algorithm "faster than Dijkstra"
+> ([blog post](https://www.vals.ai/blogs/faster-shortest-path-algorithm),
+> [spicylemonade/c-hd-proof](https://github.com/spicylemonade/c-hd-proof)).
+> We implemented it in Rust from its paper, re-implemented the BMSSP algorithm of arXiv 2504.17033 faithfully,
+> and compared both against Dijkstra.
+> Both are slower than Dijkstra at practical sizes:
+> - C-HD is 1.5–7.3× slower including preprocessing, and performs 2.2–4× more comparisons.
+> - DMM+25 is 14–121× slower.
+>
+> The replication also showed that the speedup claims for the earlier implementations
+> (in the "Results", "Discussion" and "Conclusion" sections below) do not hold:
+> - V1 is identical to Dijkstra.
+> - V2 never reaches its Bellman–Ford phase.
+> - The "core algorithm" falls through to a full Dijkstra on its top-level call.
+>
+> See §6 of the report for details.
 
-- **著者**: Ran Duan, Jiayi Mao, Xiao Mao, Xinkai Shu, Longhui Yin
-- **主張**: O(m log^(2/3) n)時間での単一始点最短経路問題の解法
-- **従来**: Dijkstraアルゴリズム O(m log n)
+## About the paper
 
-## 実装内容
+The paper received the Best Paper Award at STOC 2025 (ACM Symposium on Theory of Computing). It breaks the complexity barrier that Dijkstra's algorithm had held for 40 years.
 
-### アルゴリズム
+- **Authors**: Ran Duan, Jiayi Mao, Xiao Mao, Xinkai Shu, Longhui Yin
+- **Claim**: single-source shortest paths in O(m log^(2/3) n) time
+- **Previous bound**: Dijkstra's algorithm, O(m log n)
 
-1. **Dijkstraアルゴリズム** (`src/dijkstra.rs`)
-   - 従来の標準的な実装（ベースライン）
+## Implementations
 
-2. **改善版V1** (`src/improved_sssp.rs`)
-   - シンプルな最適化版
+### Algorithms
 
-3. **改善版V2** (`src/improved_sssp_v2.rs`)
-   - 論文のアイデアに基づく実装
-   - DijkstraとBellman-Fordのハイブリッド
-   - 適応的なフロンティア管理
+1. **Dijkstra** (`src/dijkstra.rs`)
+   - Standard implementation (baseline)
+2. **Improved V1** (`src/improved_sssp.rs`)
+   - Originally described as a simple optimization. In fact it is identical to Dijkstra.
+3. **Improved V2** (`src/improved_sssp_v2.rs`)
+   - Originally described as a Dijkstra / Bellman–Ford hybrid with adaptive frontier management.
+   - In fact the Bellman–Ford phase is unreachable, so it is Dijkstra.
+4. **Core algorithm** (`src/core_algorithm.rs`)
+   - Originally described as an exact implementation of the paper (BMSSP recursion, FindPivots, partial-sorting structure).
+   - In fact the top-level call goes straight to a full Dijkstra.
+5. **Faithful DMM+25** (`src/dmm25.rs`), added 2026-09
+   - The paper's Algorithms 1–3, the Lemma 3.3 block data structure and the constant-degree transform
+6. **C-HD** (`src/chd.rs`), added 2026-09
+   - §2–§6 of the vals.ai / c-hd-proof paper: preprocessing, FindPivots-HD, pointer scans, parameters
+7. **Dijkstra baselines** (`src/dijkstra.rs`: `dijkstra_csr`, `dijkstra_dary`), added 2026-09
 
-4. **コアアルゴリズム** (`src/core_algorithm.rs`) ⭐ **NEW**
-   - 論文の正確な実装
-   - BMSSP（Bounded Multi-Source Shortest Path）再帰構造
-   - FindPivots: k=⌊log^(1/3) n⌋ステップの緩和
-   - 部分ソートデータ構造
+### Validation tools
 
-### 検証ツール
+- `src/bin/compare.rs`: benchmark with exact per-vertex checks against Dijkstra, including unreachable vertices
+- `examples/opcount.rs`: comparison counts, the cost measure of the comparison-addition model (`--features count-cmp`)
+- `tests/bmssp_family_test.rs`: exactness tests for DMM+25 and C-HD
+- `src/main.rs`: original performance comparison. Its correctness check ignores vertices at +∞.
+- `src/analysis.rs`: original complexity analysis
+- `tests/core_algorithm_test.rs`: unit tests for the core algorithm (8 tests)
+- `benches/shortest_path_bench.rs`: Criterion benchmarks
 
-- `src/main.rs`: 基本的な性能比較（全4実装の比較）
-- `src/analysis.rs`: 詳細な複雑度分析
-- `tests/core_algorithm_test.rs`: コアアルゴリズムの単体テスト（8項目）
-- `benches/shortest_path_bench.rs`: Criterionによるベンチマーク
-
-## 実行方法
+## How to run
 
 ```bash
-# 基本的な性能比較（全4実装）
+# 2026-09 replication: correctness tests and comparison benchmarks
+cargo test --release --test bmssp_family_test
+cargo run --release --bin compare -- --lg 14,16,18,20 --t0 16,4
+cargo run --release --features count-cmp --example opcount
+
+# Original performance comparison (4 implementations)
 cargo run --release --bin shortest-path-validation
 
-# 詳細な分析（sparse/medium/denseグラフ）
+# Original detailed analysis (sparse/medium/dense graphs)
 cargo run --release --bin analysis
 
-# コアアルゴリズムの単体テスト
+# Unit tests for the core algorithm
 cargo test --test core_algorithm_test
 
-# ベンチマーク
+# Criterion benchmarks
 cargo bench
 ```
 
-## 検証結果
+## Results (2026-09 replication)
 
-### 🎯 最新ベンチマーク結果（全4実装の比較）
+These are execution times relative to the fastest Dijkstra (a 4-ary heap). Values above 1 mean slower than Dijkstra.
+Every run matched Dijkstra exactly on every vertex.
+
+| Graphs | C-HD (incl. preprocessing) | C-HD core only | DMM+25 |
+|---|---|---|---|
+| Random sparse, n = 2^14–2^22 | 1.47–7.3× | 1.12–3.9× | 14–121× |
+| Grid, n = 2^16–2^22 | 4.5–7.3× | 3.2–5.1× | 38–50× |
+
+C-HD also performs 2.2–4.0× more label/weight comparisons than Dijkstra.
+Across the measured range, n = 2^14–2^22, there is no sign of a crossover.
+The theoretical gain of lg^{1/12} n is at most 1.29 in this range.
+The full tables and the analysis are in [docs/chd-replication.md](./docs/chd-replication.md).
+Raw data is in `results/`.
+
+## Original results (2025)
+
+> ⚠️ These are the original 2025 results. They are kept for the record.
+> Each benchmark was timed once, and the correctness check missed vertices left at +∞.
+> All three compared implementations are effectively Dijkstra, so the reported "speedups" are measurement noise
+> (see §6 of [docs/chd-replication.md](./docs/chd-replication.md)).
+
+### Benchmark (4 implementations)
 
 ```
-ノード数  エッジ数   Dijkstra(ms)  改善V1(ms)  改善V2(ms)  コア(ms)   最高速化
+Nodes     Edges      Dijkstra(ms)  V1(ms)      V2(ms)      Core(ms)   Best speedup
 1000      50,193     0.247         0.232       0.237       0.705      1.06x
 2000      200,205    0.962         0.676       0.689       3.089      1.42x
 5000      1,250,309  5.130         4.316       4.540       19.523     1.19x
 ```
 
-### 📊 各実装の特徴
+### Claimed characteristics (not valid; see above)
 
-| 実装 | 速度 | 理論的正確性 | 実装の複雑さ |
+| Implementation | Speed | Theoretical fidelity | Complexity |
 |------|------|------------|------------|
-| **Dijkstra** | ベースライン | ✅ 完全 | シンプル |
-| **改善V1** | 1.1-1.2x | ⚠️ 簡略化 | シンプル |
-| **改善V2** | **1.1-1.6x** 🏆 | ✅ 良好 | 中程度 |
-| **コアアルゴリズム** | 0.3-0.5x | ✅ **論文に忠実** | 複雑 |
+| **Dijkstra** | baseline | ✅ complete | simple |
+| **V1** | 1.1–1.2x | ⚠️ simplified | simple |
+| **V2** | 1.1–1.6x | ✅ good | moderate |
+| **Core algorithm** | 0.3–0.5x | "faithful to the paper" | complex |
 
-### 性能改善（改善V2による）
-- **Sparseグラフ（密度0.01）**: 最大1.29倍の高速化
-- **中密度グラフ（密度0.05）**: 最大1.28倍の高速化
-- **Denseグラフ（密度0.20）**: 最大1.17倍の高速化
+The original README also claimed the following. None of it holds, because every implementation compared is Dijkstra.
+- V2 speedups of up to 1.29× on sparse graphs, 1.28× at medium density and 1.17× on dense graphs.
+- The O(m log^(2/3) n) complexity was demonstrated, because a normalized time ratio converged to about 0.5.
 
-### 複雑度の実証
-正規化された実行時間の比率が約0.5に収束し、理論値と一致：
+The 8 unit tests of the core algorithm pass, but they never exercise the BMSSP recursion on a real run.
 
-```
-ノード数  Dijkstra/改善版の比率
-500       0.584
-1000      0.531
-2000      0.531
-4000      0.520
-8000      0.504
-```
+## Conclusion (revised 2026-09)
 
-### ✅ コアアルゴリズムの単体テスト結果
+- A faithful implementation of arXiv 2504.17033 is correct but 14–121× slower than Dijkstra at n ≤ 2^22.
+  Its advantage is purely asymptotic.
+- C-HD's "faster than Dijkstra" is a formal asymptotic upper bound.
+  The gain is lg^{1/12} n, it applies only in a narrow density window, and the constants are astronomically large.
+  Its authors do not claim a practical speedup.
+  In our measurements it is slower than Dijkstra in every case, both in time and in comparison count.
 
-全8項目のテストが成功：
-- ✅ パラメータ計算の正確性（k, t, l）
-- ✅ FindPivotsの動作（ピボット選択）
-- ✅ 部分ソートデータ構造の操作
-- ✅ 再帰深さの検証
-- ✅ 境界付き探索の動作
-- ✅ 単純パスでの正確性
-- ✅ 小規模グラフでの正確性
-- ✅ 複雑度スケーリングの確認
+The original 2025 analysis is in [REPORT.md](./REPORT.md). Its conclusions are superseded by the replication report.
 
-## 考察
-
-### 成功点
-- ✅ 理論的な複雑度O(m log^(2/3) n)を実証
-- ✅ 論文の全コンポーネントを正確に実装（BMSSP、FindPivots、部分ソート）
-- ✅ 全てのテストケースで正確な結果を出力
-- ✅ 改善V2で最大1.6倍の高速化を達成
-
-### 重要な発見
-1. **コアアルゴリズムの性能問題**: 論文に忠実な実装は理論的には正しいが、実際には遅い
-   - 再帰オーバーヘッドが大きい
-   - 定数項が非常に大きい
-   
-2. **改善V2の有効性**: DijkstraとBellman-Fordのハイブリッドが最も実用的
-   - 論文のアイデアを簡略化
-   - 実用的な速度改善を達成
-
-### 限界と今後の課題
-- コアアルゴリズムの最適化が必要
-- 並列化による更なる高速化の可能性
-- 実世界のグラフでの検証が必要
-
-## 結論
-
-本プロジェクトでは、論文「Breaking the Sorting Barrier」の主張を検証し、以下を達成しました：
-
-1. **理論の実証**: O(m log^(2/3) n)の複雑度を実験的に確認
-2. **完全な実装**: 論文の全アルゴリズム（BMSSP、FindPivots、部分ソート）を正確に実装
-3. **実用的な改善**: 改善V2により最大1.6倍の高速化を達成
-4. **理論と実践のギャップ**: 論文に忠実な実装は定数項が大きく、実用性に課題があることを発見
-
-Dijkstraアルゴリズムという40年間最適とされてきた古典的アルゴリズムを理論的に改善できることを実証しました。これは計算理論における重要なマイルストーンです。
-
-詳細な分析結果は[REPORT.md](./REPORT.md)を参照してください。
-
-## ライセンス
+## License
 
 MIT
 
-## 参考文献
+## References
 
 - [Breaking the Sorting Barrier for Directed Single-Source Shortest Paths](https://arxiv.org/abs/2504.17033)
 - [STOC 2025 Best Paper Award](https://www.mpi-inf.mpg.de/news/detail/stoc-best-paper-award-how-to-find-the-shortest-path-faster)
+- [A Faster Shortest Path Algorithm (vals.ai)](https://www.vals.ai/blogs/faster-shortest-path-algorithm)
+- [spicylemonade/c-hd-proof](https://github.com/spicylemonade/c-hd-proof)

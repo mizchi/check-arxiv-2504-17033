@@ -1,0 +1,150 @@
+graph                   n         m | algorithm                      ms   check  notes
+random d=2          16384     32768 | dijkstra-csr (new)           1.48      ok  
+random d=2          16384     32768 | dijkstra (repo)              2.66      ok  
+random d=2          16384     32768 | dijkstra-4ary (new)          1.38      ok  
+random d=2          16384     32768 | improved-v1 (repo)           2.64      ok  
+random d=2          16384     32768 | improved-v2 (repo)           1.90      ok  
+random d=2          16384     32768 | core (repo)                  4.23      ok  
+random d=2          16384     32768 | dmm25 (new)                 36.27      ok  N'=65536 k=2 t=6 L=3 relax/m=14.37 pre=2ms
+random d=2          16384     32768 | chd t0=16 (new)              5.32      ok  N'=14173 k=4 t=16 L=1 relax/m=0.80 del=0 pre=2ms formal=Bellman-Ford
+random d=2          16384     32768 | chd t0=4 (new)               5.26      ok  N'=14173 k=2 t=4 L=4 relax/m=0.80 del=227 pre=2ms formal=Bellman-Ford
+
+random d=4          16384     65536 | dijkstra-csr (new)           2.32      ok  
+random d=4          16384     65536 | dijkstra (repo)              2.44      ok  
+random d=4          16384     65536 | dijkstra-4ary (new)          1.77      ok  
+random d=4          16384     65536 | improved-v1 (repo)           2.50      ok  
+random d=4          16384     65536 | improved-v2 (repo)           2.22      ok  
+random d=4          16384     65536 | core (repo)                  4.60      ok  
+random d=4          16384     65536 | dmm25 (new)                 99.40      ok  N'=131072 k=2 t=6 L=3 relax/m=17.35 pre=5ms
+random d=4          16384     65536 | chd t0=16 (new)              8.07      ok  N'=16084 k=4 t=16 L=1 relax/m=0.98 del=0 pre=3ms formal=Bellman-Ford
+random d=4          16384     65536 | chd t0=4 (new)               8.62      ok  N'=16084 k=2 t=4 L=4 relax/m=0.98 del=291 pre=3ms formal=Bellman-Ford
+
+random d=7          16384    114688 | dijkstra-csr (new)           3.19      ok  
+random d=7          16384    114688 | dijkstra (repo)              3.27      ok  
+random d=7          16384    114688 | dijkstra-4ary (new)          2.11      ok  
+random d=7          16384    114688 | improved-v1 (repo)           3.46      ok  
+random d=7          16384    114688 | improved-v2 (repo)           3.19      ok  
+random d=7          16384    114688 | core (repo)                  5.39      ok  
+random d=7          16384    114688 | dmm25 (new)                229.30      ok  N'=229376 k=2 t=6 L=3 relax/m=17.52 pre=9ms
+random d=7          16384    114688 | chd t0=16 (new)             15.23      ok  N'=16372 k=4 t=16 L=1 relax/m=1.00 del=0 pre=7ms formal=Bellman-Ford
+random d=7          16384    114688 | chd t0=4 (new)              14.76      ok  N'=16372 k=2 t=4 L=4 relax/m=1.00 del=408 pre=7ms formal=Bellman-Ford
+
+random d=16         16384    262144 | dijkstra-csr (new)           6.71      ok  
+random d=16         16384    262144 | dijkstra (repo)              7.05      ok  
+random d=16         16384    262144 | dijkstra-4ary (new)          4.35      ok  
+random d=16         16384    262144 | improved-v1 (repo)           6.99      ok  
+random d=16         16384    262144 | improved-v2 (repo)           6.88      ok  
+random d=16         16384    262144 | core (repo)                 11.97      ok  
+random d=16         16384    262144 | dmm25 (new)                525.21      ok  N'=524288 k=2 t=7 L=3 relax/m=17.30 pre=22ms
+random d=16         16384    262144 | chd t0=16 (new)             31.75      ok  N'=16384 k=4 t=16 L=1 relax/m=1.00 del=0 pre=20ms formal=Bellman-Ford
+random d=16         16384    262144 | chd t0=4 (new)              31.35      ok  N'=16384 k=2 t=4 L=4 relax/m=1.00 del=768 pre=19ms formal=Bellman-Ford
+
+random d=2          65536    131072 | dijkstra-csr (new)           7.68      ok  
+random d=2          65536    131072 | dijkstra (repo)             11.01      ok  
+random d=2          65536    131072 | dijkstra-4ary (new)          7.23      ok  
+random d=2          65536    131072 | improved-v1 (repo)          10.72      ok  
+random d=2          65536    131072 | improved-v2 (repo)          11.83      ok  
+random d=2          65536    131072 | core (repo)                 23.35      ok  
+random d=2          65536    131072 | dmm25 (new)                217.82      ok  N'=262144 k=2 t=6 L=3 relax/m=15.36 pre=8ms
+random d=2          65536    131072 | chd t0=16 (new)             35.68      ok  N'=56599 k=4 t=16 L=1 relax/m=0.80 del=0 pre=9ms formal=C-HD
+random d=2          65536    131072 | chd t0=4 (new)              35.95      ok  N'=56599 k=2 t=4 L=4 relax/m=0.82 del=2930 pre=9ms formal=C-HD
+
+random d=4          65536    262144 | dijkstra-csr (new)          15.08      ok  
+random d=4          65536    262144 | dijkstra (repo)             18.52      ok  
+random d=4          65536    262144 | dijkstra-4ary (new)         13.33      ok  
+random d=4          65536    262144 | improved-v1 (repo)          20.18      ok  
+random d=4          65536    262144 | improved-v2 (repo)          20.54      ok  
+random d=4          65536    262144 | core (repo)                 35.50      ok  
+random d=4          65536    262144 | dmm25 (new)                593.07      ok  N'=524288 k=2 t=7 L=3 relax/m=17.35 pre=23ms
+random d=4          65536    262144 | chd t0=16 (new)             64.43      ok  N'=64312 k=4 t=16 L=1 relax/m=0.98 del=0 pre=15ms formal=C-HD
+random d=4          65536    262144 | chd t0=4 (new)              63.72      ok  N'=64312 k=2 t=4 L=4 relax/m=0.99 del=5408 pre=14ms formal=C-HD
+
+random d=8          65536    524288 | dijkstra-csr (new)          29.08      ok  
+random d=8          65536    524288 | dijkstra (repo)             32.64      ok  
+random d=8          65536    524288 | dijkstra-4ary (new)         21.67      ok  
+random d=8          65536    524288 | improved-v1 (repo)          31.65      ok  
+random d=8          65536    524288 | improved-v2 (repo)          35.93      ok  
+random d=8          65536    524288 | core (repo)                 53.96      ok  
+random d=8          65536    524288 | dmm25 (new)               1320.16      ok  N'=1048576 k=2 t=7 L=3 relax/m=17.51 pre=55ms
+random d=8          65536    524288 | chd t0=16 (new)             85.61      ok  N'=65507 k=4 t=16 L=1 relax/m=1.00 del=0 pre=32ms formal=C-HD
+random d=8          65536    524288 | chd t0=4 (new)              94.88      ok  N'=65507 k=2 t=4 L=4 relax/m=1.00 del=4915 pre=32ms formal=C-HD
+
+random d=16         65536   1048576 | dijkstra-csr (new)          47.10      ok  
+random d=16         65536   1048576 | dijkstra (repo)             47.06      ok  
+random d=16         65536   1048576 | dijkstra-4ary (new)         26.91      ok  
+random d=16         65536   1048576 | improved-v1 (repo)          46.48      ok  
+random d=16         65536   1048576 | improved-v2 (repo)          50.39      ok  
+random d=16         65536   1048576 | core (repo)                 72.53      ok  
+random d=16         65536   1048576 | dmm25 (new)               2462.08      ok  N'=2097152 k=2 t=7 L=3 relax/m=17.47 pre=92ms
+random d=16         65536   1048576 | chd t0=16 (new)            150.52      ok  N'=65536 k=4 t=16 L=2 relax/m=1.00 del=0 pre=76ms formal=Bellman-Ford
+random d=16         65536   1048576 | chd t0=4 (new)             159.91      ok  N'=65536 k=2 t=4 L=5 relax/m=1.00 del=7854 pre=77ms formal=Bellman-Ford
+
+random d=2         262144    524288 | dijkstra-csr (new)          88.95      ok  
+random d=2         262144    524288 | dijkstra (repo)             70.91      ok  
+random d=2         262144    524288 | dijkstra-4ary (new)         81.20      ok  
+random d=2         262144    524288 | improved-v1 (repo)          66.65      ok  
+random d=2         262144    524288 | improved-v2 (repo)          79.36      ok  
+random d=2         262144    524288 | core (repo)                129.28      ok  
+random d=2         262144    524288 | dmm25 (new)               1137.58      ok  N'=1048576 k=2 t=7 L=3 relax/m=15.38 pre=44ms
+random d=2         262144    524288 | chd t0=16 (new)            223.06      ok  N'=226646 k=4 t=16 L=2 relax/m=0.80 del=0 pre=60ms formal=C-HD
+random d=2         262144    524288 | chd t0=4 (new)             224.38      ok  N'=226646 k=3 t=5 L=4 relax/m=0.81 del=14367 pre=56ms formal=C-HD
+
+random d=5         262144   1310720 | dijkstra-csr (new)         200.21      ok  
+random d=5         262144   1310720 | dijkstra (repo)            158.66      ok  
+random d=5         262144   1310720 | dijkstra-4ary (new)        134.99      ok  
+random d=5         262144   1310720 | improved-v1 (repo)         155.24      ok  
+random d=5         262144   1310720 | improved-v2 (repo)         188.56      ok  
+random d=5         262144   1310720 | core (repo)                277.79      ok  
+random d=5         262144   1310720 | dmm25 (new)               3856.56      ok  N'=2621440 k=2 t=7 L=4 relax/m=20.62 pre=165ms
+random d=5         262144   1310720 | chd t0=16 (new)            384.09      ok  N'=260397 k=4 t=16 L=2 relax/m=0.99 del=0 pre=116ms formal=C-HD
+random d=5         262144   1310720 | chd t0=4 (new)             382.71      ok  N'=260397 k=2 t=4 L=5 relax/m=1.00 del=6826 pre=107ms formal=C-HD
+
+random d=8         262144   2097152 | dijkstra-csr (new)         223.24      ok  
+random d=8         262144   2097152 | dijkstra (repo)            247.11      ok  
+random d=8         262144   2097152 | dijkstra-4ary (new)        179.47      ok  
+random d=8         262144   2097152 | improved-v1 (repo)         212.08      ok  
+random d=8         262144   2097152 | improved-v2 (repo)         218.97      ok  
+random d=8         262144   2097152 | core (repo)                374.55      ok  
+random d=8         262144   2097152 | dmm25 (new)               6364.32      ok  N'=4194304 k=2 t=7 L=4 relax/m=20.58 pre=215ms
+random d=8         262144   2097152 | chd t0=16 (new)            475.82      ok  N'=262062 k=4 t=16 L=2 relax/m=1.00 del=0 pre=149ms formal=C-HD
+random d=8         262144   2097152 | chd t0=4 (new)             495.58      ok  N'=262062 k=2 t=4 L=5 relax/m=1.00 del=7219 pre=151ms formal=C-HD
+
+random d=16        262144   4194304 | dijkstra-csr (new)         305.35      ok  
+random d=16        262144   4194304 | dijkstra (repo)            309.93      ok  
+random d=16        262144   4194304 | dijkstra-4ary (new)        180.27      ok  
+random d=16        262144   4194304 | improved-v1 (repo)         261.14      ok  
+random d=16        262144   4194304 | improved-v2 (repo)         277.38      ok  
+random d=16        262144   4194304 | core (repo)                506.88      ok  
+random d=16        262144   4194304 | dmm25 (new)              12959.76      ok  N'=8388608 k=2 t=8 L=3 relax/m=17.37 pre=417ms
+random d=16        262144   4194304 | chd t0=16 (new)            796.50      ok  N'=262144 k=4 t=16 L=2 relax/m=1.00 del=0 pre=389ms formal=Bellman-Ford
+random d=16        262144   4194304 | chd t0=4 (new)             734.84      ok  N'=262144 k=2 t=4 L=5 relax/m=1.00 del=12158 pre=334ms formal=Bellman-Ford
+
+random d=2        1048576   2097152 | dijkstra-csr (new)         474.33      ok  
+random d=2        1048576   2097152 | dijkstra (repo)            448.68      ok  
+random d=2        1048576   2097152 | dijkstra-4ary (new)        579.40      ok  
+random d=2        1048576   2097152 | dmm25 (new)               6427.03      ok  N'=4194304 k=2 t=7 L=4 relax/m=18.11 pre=274ms
+random d=2        1048576   2097152 | chd t0=16 (new)           1193.82      ok  N'=906530 k=4 t=16 L=2 relax/m=0.80 del=0 pre=292ms formal=C-HD
+random d=2        1048576   2097152 | chd t0=4 (new)            1240.88      ok  N'=906530 k=3 t=5 L=4 relax/m=0.80 del=21197 pre=287ms formal=C-HD
+
+random d=5        1048576   5242880 | dijkstra-csr (new)        1210.49      ok  
+random d=5        1048576   5242880 | dijkstra (repo)           1025.01      ok  
+random d=5        1048576   5242880 | dijkstra-4ary (new)       1169.30      ok  
+random d=5        1048576   5242880 | dmm25 (new)              19524.30      ok  N'=10485760 k=2 t=8 L=3 relax/m=17.54 pre=589ms
+random d=5        1048576   5242880 | chd t0=16 (new)           1938.79      ok  N'=1041535 k=4 t=16 L=2 relax/m=0.99 del=0 pre=525ms formal=C-HD
+random d=5        1048576   5242880 | chd t0=4 (new)            2173.10      ok  N'=1041535 k=2 t=4 L=5 relax/m=1.00 del=95967 pre=519ms formal=C-HD
+
+random d=9        1048576   9437184 | dijkstra-csr (new)        1844.69      ok  
+random d=9        1048576   9437184 | dijkstra (repo)           1527.16      ok  
+random d=9        1048576   9437184 | dijkstra-4ary (new)       1395.04      ok  
+random d=9        1048576   9437184 | dmm25 (new)              40794.94      ok  N'=18874368 k=2 t=8 L=4 relax/m=20.35 pre=1115ms
+random d=9        1048576   9437184 | chd t0=16 (new)           2749.28      ok  N'=1048438 k=4 t=16 L=2 relax/m=1.00 del=0 pre=1025ms formal=C-HD
+random d=9        1048576   9437184 | chd t0=4 (new)            2889.13      ok  N'=1048438 k=2 t=4 L=5 relax/m=1.00 del=86281 pre=947ms formal=C-HD
+
+random d=16       1048576  16777216 | dijkstra-csr (new)        2755.87      ok  
+random d=16       1048576  16777216 | dijkstra (repo)           2286.68      ok  
+random d=16       1048576  16777216 | dijkstra-4ary (new)       1745.09      ok  
+random d=16       1048576  16777216 | dmm25 (new)              82267.94      ok  N'=33554432 k=2 t=8 L=4 relax/m=20.12 pre=1826ms
+random d=16       1048576  16777216 | chd t0=16 (new)           3723.57      ok  N'=1048576 k=4 t=16 L=2 relax/m=1.00 del=0 pre=1491ms formal=Bellman-Ford
+random d=16       1048576  16777216 | chd t0=4 (new)            4185.38      ok  N'=1048576 k=2 t=4 L=6 relax/m=1.00 del=118660 pre=1631ms formal=Bellman-Ford
+
+wrote results/random.csv

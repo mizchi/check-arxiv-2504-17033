@@ -1,0 +1,32 @@
+graph                   n         m | algorithm                      ms   check  notes
+grid 256x256        65536    261120 | dijkstra-csr (new)           6.77      ok  
+grid 256x256        65536    261120 | dijkstra (repo)              8.14      ok  
+grid 256x256        65536    261120 | dijkstra-4ary (new)          5.74      ok  
+grid 256x256        65536    261120 | improved-v1 (repo)           9.10      ok  
+grid 256x256        65536    261120 | improved-v2 (repo)           8.73      ok  
+grid 256x256        65536    261120 | core (repo)                 21.65      ok  
+grid 256x256        65536    261120 | dmm25 (new)                259.70      ok  N'=522240 k=2 t=7 L=3 relax/m=15.64 pre=13ms
+grid 256x256        65536    261120 | chd t0=16 (new)             33.19      ok  N'=65536 k=4 t=16 L=2 relax/m=1.00 del=0 pre=13ms formal=C-HD
+
+grid 512x512       262144   1046528 | dijkstra-csr (new)          30.78      ok  
+grid 512x512       262144   1046528 | dijkstra (repo)             33.27      ok  
+grid 512x512       262144   1046528 | dijkstra-4ary (new)         26.44      ok  
+grid 512x512       262144   1046528 | improved-v1 (repo)          34.67      ok  
+grid 512x512       262144   1046528 | improved-v2 (repo)          52.23      ok  
+grid 512x512       262144   1046528 | core (repo)                 78.65      ok  
+grid 512x512       262144   1046528 | dmm25 (new)               1318.34      ok  N'=2093056 k=2 t=7 L=3 relax/m=15.78 pre=94ms
+grid 512x512       262144   1046528 | chd t0=16 (new)            191.57      ok  N'=262144 k=4 t=16 L=2 relax/m=1.00 del=0 pre=58ms formal=C-HD
+
+grid 1024x1024    1048576   4190208 | dijkstra-csr (new)         159.32      ok  
+grid 1024x1024    1048576   4190208 | dijkstra (repo)            156.12      ok  
+grid 1024x1024    1048576   4190208 | dijkstra-4ary (new)        156.39      ok  
+grid 1024x1024    1048576   4190208 | dmm25 (new)               5994.62      ok  N'=8380416 k=2 t=8 L=3 relax/m=15.70 pre=359ms
+grid 1024x1024    1048576   4190208 | chd t0=16 (new)            706.21      ok  N'=1048576 k=4 t=16 L=2 relax/m=1.00 del=0 pre=211ms formal=C-HD
+
+grid 2048x2048    4194304  16769024 | dijkstra-csr (new)         880.04      ok  
+grid 2048x2048    4194304  16769024 | dijkstra (repo)            833.59      ok  
+grid 2048x2048    4194304  16769024 | dijkstra-4ary (new)        939.08      ok  
+grid 2048x2048    4194304  16769024 | dmm25 (new)              39634.09      ok  N'=33538048 k=2 t=8 L=4 relax/m=18.80 pre=1567ms
+grid 2048x2048    4194304  16769024 | chd t0=16 (new)           3880.14      ok  N'=4194304 k=4 t=16 L=2 relax/m=1.00 del=0 pre=1029ms formal=C-HD
+
+wrote results/grid.csv

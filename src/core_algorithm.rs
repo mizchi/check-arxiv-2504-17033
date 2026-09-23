@@ -1,7 +1,5 @@
 use crate::graph::Graph;
 
-#[cfg(test)]
-use shortest_path_validation::graph::Graph as TestGraph;
 use std::collections::{BinaryHeap, VecDeque, HashSet};
 use std::cmp::Ordering;
 

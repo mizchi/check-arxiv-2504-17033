@@ -1,0 +1,22 @@
+graph                   n         m | algorithm                      ms   check  notes
+random d=2        4194304   8388608 | dijkstra-csr (new)        2959.37      ok  
+random d=2        4194304   8388608 | dijkstra (repo)           3058.19      ok  
+random d=2        4194304   8388608 | dijkstra-4ary (new)       4617.07      ok  
+random d=2        4194304   8388608 | chd t0=16 (new)           6492.55      ok  N'=3627047 k=4 t=16 L=2 relax/m=0.80 del=0 pre=1262ms formal=C-HD
+
+random d=5        4194304  20971520 | dijkstra-csr (new)        8741.91      ok  
+random d=5        4194304  20971520 | dijkstra (repo)           7158.40      ok  
+random d=5        4194304  20971520 | dijkstra-4ary (new)       7728.37      ok  
+random d=5        4194304  20971520 | chd t0=16 (new)          10499.00      ok  N'=4165991 k=4 t=16 L=2 relax/m=0.99 del=0 pre=2466ms formal=C-HD
+
+random d=10       4194304  41943040 | dijkstra-csr (new)       11977.36      ok  
+random d=10       4194304  41943040 | dijkstra (repo)           9232.12      ok  
+random d=10       4194304  41943040 | dijkstra-4ary (new)       8018.56      ok  
+random d=10       4194304  41943040 | chd t0=16 (new)          16686.87      ok  N'=4194125 k=4 t=16 L=2 relax/m=1.00 del=0 pre=6781ms formal=C-HD
+
+random d=16       4194304  67108864 | dijkstra-csr (new)       15850.15      ok  
+random d=16       4194304  67108864 | dijkstra (repo)          13279.30      ok  
+random d=16       4194304  67108864 | dijkstra-4ary (new)       9447.76      ok  
+random d=16       4194304  67108864 | chd t0=16 (new)          23131.93      ok  N'=4194304 k=4 t=16 L=2 relax/m=1.00 del=0 pre=9336ms formal=Bellman-Ford
+
+wrote results/random_2p22.csv

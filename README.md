@@ -2,6 +2,15 @@
 
 論文「Breaking the Sorting Barrier for Directed Single-Source Shortest Paths」（[arXiv:2504.17033](https://arxiv.org/abs/2504.17033)）で提案された革新的な最短経路アルゴリズムの検証実装です。
 
+> **2026-09 追試（[REPORT_CHD.md](./REPORT_CHD.md)）**
+> vals.ai が「ダイクストラより高速」と発表した C-HD（[ブログ](https://www.vals.ai/blogs/faster-shortest-path-algorithm)、
+> [spicylemonade/c-hd-proof](https://github.com/spicylemonade/c-hd-proof)）を論文から Rust で実装し、
+> arXiv 2504.17033 の BMSSP を論文どおりに実装し直したものと合わせて Dijkstra と比較した。
+> 結果として、どちらも実用サイズでは Dijkstra より遅い（C-HD は前処理込みで 1.5〜7.3 倍遅く、比較回数も 2.2〜4 倍多い。DMM+25 は 14〜121 倍遅い）。
+> また、下記の「検証結果」「考察」「結論」節にある既存実装の高速化主張は成り立たないことが分かった
+> （V1 は Dijkstra と同一コード、V2 の Bellman–Ford 相は到達不能、コアアルゴリズムはトップ呼び出しで完全 Dijkstra に落ちる）。
+> 詳細はレポートの §6 を参照。
+
 ## 論文について
 
 2025年のSTOC（ACM Symposium on Theory of Computing）でBest Paper Awardを受賞した画期的な研究で、40年間破られなかったDijkstraアルゴリズムの計算量の壁を突破しました。
@@ -31,6 +40,12 @@
    - FindPivots: k=⌊log^(1/3) n⌋ステップの緩和
    - 部分ソートデータ構造
 
+5. **DMM+25 忠実実装** (`src/dmm25.rs`) — 2026-09 追加
+   - 論文の Algorithm 1–3、Lemma 3.3 のブロック構造、定次数化
+6. **C-HD** (`src/chd.rs`) — 2026-09 追加
+   - vals.ai / c-hd-proof の論文 §2–§6（前処理、FindPivots-HD、ポインタ走査、パラメータ）
+7. **Dijkstra ベースライン** (`src/dijkstra.rs`: `dijkstra_csr`, `dijkstra_dary`)
+
 ### 検証ツール
 
 - `src/main.rs`: 基本的な性能比較（全4実装の比較）
@@ -41,6 +56,11 @@
 ## 実行方法
 
 ```bash
+# 2026-09 追試: 正しさテストと比較ベンチマーク
+cargo test --release --test bmssp_family_test
+cargo run --release --bin compare -- --lg 14,16,18,20 --t0 16,4
+cargo run --release --features count-cmp --example opcount
+
 # 基本的な性能比較（全4実装）
 cargo run --release --bin shortest-path-validation
 
@@ -55,6 +75,9 @@ cargo bench
 ```
 
 ## 検証結果
+
+> ⚠️ 以下は 2025 年時点の旧結果。ベンチマークは 1 回計測で、正しさチェックも ∞ の不一致を見落とす実装だった。
+> 比較対象の 3 実装はいずれも実質的に Dijkstra なので、「高速化」の数値は計測ノイズである（[REPORT_CHD.md](./REPORT_CHD.md) §6）。
 
 ### 🎯 最新ベンチマーク結果（全4実装の比較）
 

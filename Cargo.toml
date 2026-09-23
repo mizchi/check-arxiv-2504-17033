@@ -7,6 +7,10 @@ edition = "2021"
 rand = "0.8"
 criterion = "0.5"
 
+[features]
+# count label/weight comparisons (comparison-addition model cost); slows everything down
+count-cmp = []
+
 [[bench]]
 name = "shortest_path_bench"
 harness = false
@@ -18,3 +22,7 @@ path = "src/analysis.rs"
 [[bin]]
 name = "test_debug"
 path = "src/test_debug.rs"
+
+[[example]]
+name = "opcount"
+required-features = ["count-cmp"]

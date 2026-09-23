@@ -3,6 +3,7 @@
 対象: [A Faster Shortest Path Algorithm](https://www.vals.ai/blogs/faster-shortest-path-algorithm) と
 その成果物 [spicylemonade/c-hd-proof](https://github.com/spicylemonade/c-hd-proof)（スナップショット 2026-09-20）。
 比較対象: このリポジトリの既存実装と、arXiv 2504.17033 (DMM+25) の BMSSP を論文どおりに実装し直したもの。
+（文中のパスはリポジトリのルートからの相対パス）
 
 ## TL;DR
 

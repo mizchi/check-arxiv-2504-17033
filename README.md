@@ -2,7 +2,7 @@
 
 論文「Breaking the Sorting Barrier for Directed Single-Source Shortest Paths」（[arXiv:2504.17033](https://arxiv.org/abs/2504.17033)）で提案された革新的な最短経路アルゴリズムの検証実装です。
 
-> **2026-09 追試（[REPORT_CHD.md](./REPORT_CHD.md)）**
+> **2026-09 追試（[docs/chd-replication.md](./docs/chd-replication.md)）**
 > vals.ai が「ダイクストラより高速」と発表した C-HD（[ブログ](https://www.vals.ai/blogs/faster-shortest-path-algorithm)、
 > [spicylemonade/c-hd-proof](https://github.com/spicylemonade/c-hd-proof)）を論文から Rust で実装し、
 > arXiv 2504.17033 の BMSSP を論文どおりに実装し直したものと合わせて Dijkstra と比較した。
@@ -77,7 +77,7 @@ cargo bench
 ## 検証結果
 
 > ⚠️ 以下は 2025 年時点の旧結果。ベンチマークは 1 回計測で、正しさチェックも ∞ の不一致を見落とす実装だった。
-> 比較対象の 3 実装はいずれも実質的に Dijkstra なので、「高速化」の数値は計測ノイズである（[REPORT_CHD.md](./REPORT_CHD.md) §6）。
+> 比較対象の 3 実装はいずれも実質的に Dijkstra なので、「高速化」の数値は計測ノイズである（[docs/chd-replication.md](./docs/chd-replication.md) §6）。
 
 ### 🎯 最新ベンチマーク結果（全4実装の比較）
 
